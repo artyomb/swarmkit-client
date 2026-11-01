@@ -1,0 +1,9 @@
+/.bundle/
+/vendor/
+/pkg/
+/results/
+*.gem
+.idea/
+.codex/
+AGENTS.md
+**/.knowledge/

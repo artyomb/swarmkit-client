@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/swarmkit-client/cli'
+
+exit Swarmkit::CLI.new.run(ARGV)

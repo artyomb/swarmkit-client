@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'fileutils'
+require_relative '../lib/swarmkit-client'
+
+api = Swarmkit::API
+schema = Google::Protobuf::FileDescriptorSet.decode(File.binread(File.expand_path('../lib/swarmkit-client/schema.pb', __dir__)))
+link = ->(name) { "[#{name.delete_prefix("#{api::PACKAGE}.")}](##{name.downcase.tr('.', '-')})" }
+lines = ["# SwarmKit API reference\n", "Generated from SwarmKit `#{api::REVISION}`. Do not edit by hand.\n",
+         'Calls use `client.<service>.<method>(request, deadline: ..., metadata: ..., return_op: ...)`.',
+         'Requests and responses are protobuf objects. Nested hashes are accepted by message constructors.',
+         "Types below use protobuf names; SwarmKit types are Ruby constants under `Swarmkit::API`.\n",
+         '| Service | Method | Request | Response | Streaming |', '|---|---|---|---|---|']
+api::SERVICES.each do |name, service|
+  api::POOL.lookup(service.service_name).each do |method|
+    stream = [method.client_streaming && 'request', method.server_streaming && 'response'].select(&:itself)
+    lines << "| `#{name}` | `#{GRPC::GenericService.underscore(method.name)}` | #{link.call(method.input_type.name)} | #{link.call(method.output_type.name)} | #{stream.empty? ? 'none' : stream.join(' + ')} |"
+  end
+end
+
+render = lambda do |prefix, messages, enums|
+  enums.each do |type|
+    name = "#{prefix}.#{type.name}"
+    lines.push("\n<a id=\"#{name.downcase.tr('.', '-')}\"></a>\n", "## #{name}\n", '| Value | Number |', '|---|---|')
+    type.value.each { |value| lines << "| `#{value.name}` | #{value.number} |" }
+  end
+  messages.each do |type|
+    name = "#{prefix}.#{type.name}"
+    lines.push("\n<a id=\"#{name.downcase.tr('.', '-')}\"></a>\n", "## #{name}\n")
+    if type.field.empty?
+      lines << 'No fields.'
+    else
+      lines.push('| Field | Tag | Type | Cardinality | Oneof | Default |', '|---|---|---|---|---|---|')
+      type.field.each do |field|
+        field_type = field.type_name.empty? ? field.type.to_s.delete_prefix('TYPE_').downcase : link.call(field.type_name.delete_prefix('.'))
+        oneof = field.has_oneof_index? ? type.oneof_decl[field.oneof_index].name : ''
+        default = api::POOL.lookup(name).lookup(field.name).default.inspect.gsub('|', '&#124;')
+        lines << "| `#{field.name}` | #{field.number} | #{field_type} | #{field.label.to_s.delete_prefix('LABEL_').downcase} | #{oneof} | `#{default}` |"
+      end
+    end
+    render.call(name, type.nested_type, type.enum_type)
+  end
+end
+schema.file.reject { |file| %w[gogoproto docker.protobuf.plugin].include?(file.package) || file.name.end_with?('/descriptor.proto') }.each do |file|
+  render.call(file.package, file.message_type, file.enum_type)
+end
+lines << "\nRepeated map-entry messages represent protobuf maps; use a Ruby Hash. Proto3 scalar defaults do not imply field presence."
+FileUtils.mkdir_p(File.expand_path('../docs', __dir__))
+File.write(File.expand_path('../docs/api.md', __dir__), "#{lines.join("\n")}\n")
+puts 'Updated docs/api.md'

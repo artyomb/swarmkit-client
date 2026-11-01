@@ -1,0 +1,58 @@
+{
+  "gogoproto/gogo.proto": {
+    "url": "https://raw.githubusercontent.com/gogo/protobuf/v1.3.2/gogoproto/gogo.proto",
+    "sha256": "f2f77edf7de807ded7884813d851656f4ccb18262db717a8f31061995f3e7324"
+  },
+  "github.com/docker/swarmkit/api/types.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/types.proto",
+    "sha256": "f0a9f0dad6a87380feb7ba6715887250d4df64fc74a9ca5b9d7c14775dc81240"
+  },
+  "github.com/docker/swarmkit/api/specs.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/specs.proto",
+    "sha256": "f25c844176ba6874af81b3b182721b96a107129319825ed796ed812208be082d"
+  },
+  "github.com/docker/swarmkit/protobuf/plugin/plugin.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/protobuf/plugin/plugin.proto",
+    "sha256": "e1e65b489db311503b9fdc5e1f984b77660d1b7a3018ae92c0bbb124a86f4021"
+  },
+  "github.com/docker/swarmkit/api/objects.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/objects.proto",
+    "sha256": "dd76a9c58c6af0a4d81dcababd569b344b3926b069fc67a7225e2f85474110e9"
+  },
+  "github.com/docker/swarmkit/api/control.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/control.proto",
+    "sha256": "cd4ba9a8902eb1e468a0a6e718a952844e712d7db5a7f81dcedeaa889586778a"
+  },
+  "github.com/docker/swarmkit/api/watch.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/watch.proto",
+    "sha256": "83eb87a44ca3a9d93977430c32c719422f92ce3a1bc7dd458175c567543752f7"
+  },
+  "github.com/docker/swarmkit/api/logbroker.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/logbroker.proto",
+    "sha256": "8894f2e4f0c97bb082454dfccbf01e0cf26951a1f770aee163d28f64f2da5cd9"
+  },
+  "github.com/docker/swarmkit/api/dispatcher.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/dispatcher.proto",
+    "sha256": "c93c7f3ace11a3c946bd2ddcbe34966932c05e5160b3b91051a8caeb268bc968"
+  },
+  "github.com/docker/swarmkit/api/ca.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/ca.proto",
+    "sha256": "2ea6cf7bcb89d792fe5b4a98c8b1c7364de13cb149aefbb56c820043c2bc3c9d"
+  },
+  "go.etcd.io/raft/v3/raftpb/raft.proto": {
+    "url": "https://raw.githubusercontent.com/etcd-io/raft/v3.6.0/raftpb/raft.proto",
+    "sha256": "312ce6c6ff1dd797e17edfa8dbc7133f965d5fc5423a76e6aaff7b09ba8be19f"
+  },
+  "github.com/docker/swarmkit/api/raft.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/raft.proto",
+    "sha256": "ad575667ea693066de0557cdff76e5bde4daaec35e8041ff4e3c5c5da066e6e4"
+  },
+  "github.com/docker/swarmkit/api/resource.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/resource.proto",
+    "sha256": "c309a506da325a7c5801993d7e6a28a7597a2f4667eec4ee41aea87efd036229"
+  },
+  "github.com/docker/swarmkit/api/health.proto": {
+    "url": "https://raw.githubusercontent.com/moby/swarmkit/17b8d222e7dd/api/health.proto",
+    "sha256": "920a69b4b3296ceb46081982b98cb7b4bd0d79f3c6ccba4536f5320dbae59df8"
+  }
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'digest'
+require 'fileutils'
+require 'json'
+require 'open-uri'
+require 'tmpdir'
+require 'google/protobuf/descriptor_pb'
+
+root = File.expand_path('..', __dir__)
+sources = JSON.parse(File.read("#{root}/schema/sources.json"))
+Dir.mktmpdir('swarmkit-schema') do |directory|
+  sources.each do |path, source|
+    data = URI.parse(source.fetch('url')).open(open_timeout: 10, read_timeout: 30, &:read)
+    raise "Source checksum mismatch: #{path}" unless Digest::SHA256.hexdigest(data) == source.fetch('sha256')
+
+    target = File.join(directory, path)
+    FileUtils.mkdir_p(File.dirname(target))
+    File.binwrite(target, data)
+  end
+  files = %w[control watch logbroker dispatcher ca raft resource health].map do |name|
+    "github.com/docker/swarmkit/api/#{name}.proto"
+  end
+  output = File.join(directory, 'schema.pb')
+  system(Gem.ruby, Gem.bin_path('grpc-tools', 'grpc_tools_ruby_protoc'), "-I#{directory}",
+         '--include_imports', "--descriptor_set_out=#{output}", *files, exception: true)
+  schema = Google::Protobuf::FileDescriptorSet.decode(File.binread(output))
+  schema.file.each(&:clear_source_code_info)
+  File.binwrite("#{root}/lib/swarmkit-client/schema.pb", schema.to_proto)
+end
+puts 'Updated lib/swarmkit-client/schema.pb'

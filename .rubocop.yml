@@ -1,0 +1,31 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - bin/api-reference
+    - spec/**/*
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Metrics:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/swarmkit-client.rb
+    - swarmkit-client.gemspec
+
+Naming/MethodParameterName:
+  AllowedNames: [ca]
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
