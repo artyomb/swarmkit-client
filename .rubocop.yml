@@ -16,6 +16,9 @@ Layout/SpaceInsideHashLiteralBraces:
 Metrics:
   Enabled: false
 
+Gemspec/RequireMFA:
+  Enabled: false
+
 Naming/FileName:
   Exclude:
     - lib/swarmkit-client.rb
