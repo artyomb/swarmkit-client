@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.bindir = 'bin'
   spec.executables = ['swarmkit-client']
   spec.require_paths = ['lib']
-  spec.metadata = {'source_code_uri' => spec.homepage, 'rubygems_mfa_required' => 'true'}
+  spec.metadata = {'source_code_uri' => spec.homepage}
 
   spec.add_dependency 'google-protobuf', '~> 4.36'
   spec.add_dependency 'grpc', '~> 1.85'
